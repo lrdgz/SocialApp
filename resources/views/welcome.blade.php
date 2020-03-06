@@ -1,5 +1,13 @@
-<form action="{{ route('statuses.store') }}" method="POST">
-    @csrf
-    <textarea name="body" cols="30" rows="10"></textarea>
-    <button id="create-status">Publicar Estado</button>
-</form>
+@extends('layouts.app')
+
+@section('content')
+    <div class="container">
+        <div class="row">
+            <div class="col-8 mx-auto">
+                <div class="card border-0 bg-light">
+                    <status-form></status-form>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
