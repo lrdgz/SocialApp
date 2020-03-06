@@ -12,9 +12,7 @@ class CreateStatusTest extends TestCase
 
     use RefreshDatabase;
 
-
     /**
-     * A basic feature test example.
      * @test
      * @return void
      */
@@ -25,7 +23,6 @@ class CreateStatusTest extends TestCase
     }
 
     /**
-     * A basic feature test example.
      * @test
      * @return void
      */
@@ -38,10 +35,46 @@ class CreateStatusTest extends TestCase
         $this->actingAs($user);
 
         //2. When -> Cuando hace un post request a status
-        $response = $this->post(route('statuses.store'), ['body' => 'Mi Primer Estado']);
+        $response = $this->postJson(route('statuses.store'), ['body' => 'Mi Primer Estado']);
         $response->assertJson(['body' => 'Mi Primer Estado']);
 
         //3. Then -> Entonces vemos un nuevo estado en la base de datos
         $this->assertDatabaseHas('statuses', ['body' => 'Mi Primer Estado', 'user_id' => $user->id]);
+    }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function a_status_requires_a_body()
+    {
+        $user = factory(User::class)->create();
+        $this->actingAs($user);
+
+        $response = $this->postJson(route('statuses.store'), ['body' => '']);
+        $response->assertStatus(422);
+        $response->assertJsonStructure([
+            'message',
+            'errors' => ['body']
+        ]);
+
+    }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function a_status_body_requires_a_minimum_length()
+    {
+        $user = factory(User::class)->create();
+        $this->actingAs($user);
+
+        $response = $this->postJson(route('statuses.store'), ['body' => 'test']);
+        $response->assertStatus(422);
+        $response->assertJsonStructure([
+            'message',
+            'errors' => ['body']
+        ]);
+
     }
 }
