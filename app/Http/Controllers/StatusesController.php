@@ -8,9 +8,12 @@ use Illuminate\Http\Request;
 class StatusesController extends Controller
 {
     public function store(Request $request){
-        Status::create([
+        $status = Status::create([
             'body' => $request->body,
             'user_id' => auth()->id()
         ]);
+
+        return response()->json(['body' => $status->body]);
+
     }
 }

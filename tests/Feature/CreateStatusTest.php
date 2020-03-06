@@ -12,6 +12,18 @@ class CreateStatusTest extends TestCase
 
     use RefreshDatabase;
 
+
+    /**
+     * A basic feature test example.
+     * @test
+     * @return void
+     */
+    public function guests_users_can_not_create_statuses()
+    {
+        $response = $this->post(route('statuses.store'), ['body' => 'Mi Primer Estado']);
+        $response->assertRedirect('/login');
+    }
+
     /**
      * A basic feature test example.
      * @test
@@ -26,7 +38,8 @@ class CreateStatusTest extends TestCase
         $this->actingAs($user);
 
         //2. When -> Cuando hace un post request a status
-        $this->post(route('statuses.store'), ['body' => 'Mi Primer Estado']);
+        $response = $this->post(route('statuses.store'), ['body' => 'Mi Primer Estado']);
+        $response->assertJson(['body' => 'Mi Primer Estado']);
 
         //3. Then -> Entonces vemos un nuevo estado en la base de datos
         $this->assertDatabaseHas('statuses', ['body' => 'Mi Primer Estado', 'user_id' => $user->id]);
