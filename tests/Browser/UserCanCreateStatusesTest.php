@@ -15,7 +15,6 @@ class UserCanCreateStatusesTest extends DuskTestCase
      * A Dusk test example.
      *
      * @test
-     * @return void
      * @throws \Throwable
      */
     public function users_can_create_statuses()
@@ -30,6 +29,7 @@ class UserCanCreateStatusesTest extends DuskTestCase
                     ->visit('/')
                     ->type('body', 'Mi Primer status')
                     ->press('#create-status')
+                    ->waitForText('Mi Primer status')
                     ->assertSee('Mi Primer status');
         });
     }

@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class StatusesController extends Controller
 {
+    public function index(){
+        return Status::latest()->paginate();
+    }
+
     public function store(Request $request){
 
         $request->validate(['body'=>'required|min:5']);
@@ -17,6 +21,5 @@ class StatusesController extends Controller
         ]);
 
         return response()->json(['body' => $status->body]);
-
     }
 }
