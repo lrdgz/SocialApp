@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::view('/', 'welcome');
+
+Route::post('statuses', 'StatusesController@store')->name('statuses.store')->middleware('auth');
+
+Auth::routes();
+
+//Route::get('/home', 'HomeController@index')->name('home');
