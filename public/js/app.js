@@ -1921,12 +1921,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+// import auth from '../mixins/auth';
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       body: ''
     };
   },
+  // mixins: [auth],
   methods: {
     submit: function submit() {
       var _this = this;
@@ -1934,7 +1944,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('/statuses', {
         body: this.body
       }).then(function (res) {
-        EventBus.$emit('status-created', res.data);
+        EventBus.$emit('status-created', res.data.data);
         _this.body = '';
       })["catch"](function (error) {
         console.error(error.response.data);
@@ -1954,6 +1964,17 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -37353,44 +37374,52 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c(
-      "form",
-      {
-        on: {
-          submit: function($event) {
-            $event.preventDefault()
-            return _vm.submit($event)
-          }
-        }
-      },
-      [
-        _c("div", { staticClass: "card-body" }, [
-          _c("textarea", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.body,
-                expression: "body"
-              }
-            ],
-            staticClass: "form-control border-0 bg-light",
-            attrs: { name: "body", placeholder: "Que estas pensando Luis" },
-            domProps: { value: _vm.body },
+    _vm.isAuthenticated
+      ? _c(
+          "form",
+          {
             on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.body = $event.target.value
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.submit($event)
               }
             }
-          })
-        ]),
-        _vm._v(" "),
-        _vm._m(0)
-      ]
-    )
+          },
+          [
+            _c("div", { staticClass: "card-body" }, [
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.body,
+                    expression: "body"
+                  }
+                ],
+                staticClass: "form-control border-0 bg-light",
+                attrs: {
+                  name: "body",
+                  placeholder:
+                    "Que estas pensando " + _vm.currentUser.name + "?"
+                },
+                domProps: { value: _vm.body },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.body = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _vm._m(0)
+          ]
+        )
+      : _c("div", { staticClass: "card-body" }, [
+          _c("a", { attrs: { href: "/login" } }, [_vm._v("Debes hacer Login")])
+        ])
   ])
 }
 var staticRenderFns = [
@@ -37431,7 +37460,37 @@ var render = function() {
   return _c(
     "div",
     _vm._l(_vm.statuses, function(status) {
-      return _c("div", { domProps: { textContent: _vm._s(status.body) } })
+      return _c("div", { staticClass: "card mb-3 border-0 shadow-sm" }, [
+        _c("div", { staticClass: "card-body d-flex flex-column" }, [
+          _c("div", { staticClass: "d-flex align-items-center mb-3" }, [
+            _c("img", {
+              staticClass: "rounded mr-3 shadow-sm",
+              attrs: {
+                width: "40px",
+                src: "https://aprendible.com/images/default-avatar.jpg",
+                alt: ""
+              }
+            }),
+            _vm._v(" "),
+            _c("div", [
+              _c("h5", {
+                staticClass: "mb-1",
+                domProps: { textContent: _vm._s(status.user_name) }
+              }),
+              _vm._v(" "),
+              _c("div", {
+                staticClass: "small text-muted",
+                domProps: { textContent: _vm._s(status.ago) }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("p", {
+            staticClass: "card-text text-secondary",
+            domProps: { textContent: _vm._s(status.body) }
+          })
+        ])
+      ])
     }),
     0
   )
@@ -49604,9 +49663,13 @@ module.exports = function(module) {
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
   \*****************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _mixins_auth__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./mixins/auth */ "./resources/js/mixins/auth.js");
+/* harmony import */ var _mixins_auth__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_mixins_auth__WEBPACK_IMPORTED_MODULE_0__);
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -49628,6 +49691,8 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 window.EventBus = new Vue();
 Vue.component('status-form', __webpack_require__(/*! ./components/StatusForm.vue */ "./resources/js/components/StatusForm.vue")["default"]);
 Vue.component('statuses-list', __webpack_require__(/*! ./components/StatusesList.vue */ "./resources/js/components/StatusesList.vue")["default"]);
+
+Vue.mixin(_mixins_auth__WEBPACK_IMPORTED_MODULE_0___default.a);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -49820,6 +49885,36 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_StatusesList_vue_vue_type_template_id_544adc6e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/mixins/auth.js":
+/*!*************************************!*\
+  !*** ./resources/js/mixins/auth.js ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var user = document.head.querySelector('meta[name="user"]');
+module.exports = {
+  computed: {
+    currentUser: function currentUser() {
+      if (this.isAuthenticated) {
+        return JSON.parse(user.content);
+      }
+
+      return {
+        name: "Usuario Invitado"
+      };
+    },
+    isAuthenticated: function isAuthenticated() {
+      return !!user.content;
+    },
+    guest: function guest() {
+      return !this.isAuthenticated;
+    }
+  }
+};
 
 /***/ }),
 

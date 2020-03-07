@@ -20,7 +20,6 @@ class UserCanCreateStatusesTest extends DuskTestCase
     public function users_can_create_statuses()
     {
 
-        $this->withoutExceptionHandling();
         $user = factory(User::class)->create();
         $this->actingAs($user);
 
@@ -30,7 +29,9 @@ class UserCanCreateStatusesTest extends DuskTestCase
                     ->type('body', 'Mi Primer status')
                     ->press('#create-status')
                     ->waitForText('Mi Primer status')
-                    ->assertSee('Mi Primer status');
+                    ->assertSee('Mi Primer status')
+                    ->assertSee($user->name)
+            ;
         });
     }
 }
