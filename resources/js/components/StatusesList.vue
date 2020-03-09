@@ -28,6 +28,7 @@
                     <i class="fa fa-thumbs-up text-primary mr-1"></i>
                     ME GUSTA
                 </button>
+                <span dusk="likes-count">{{ status.likes_count }}</span>
             </div>
         </div>
     </div>
@@ -54,14 +55,20 @@
             like(status){
 
                 axios.post(`statuses/${status.id}/likes`)
-                    .then( res => { status.is_liked = true} )
+                    .then( res => {
+                        status.is_liked = true;
+                        status.likes_count ++;
+                    } )
                     .catch( err => {console.error(err.response.data)} );
             },
 
             unlike(status){
 
                 axios.delete(`statuses/${status.id}/likes`)
-                    .then( res => { status.is_liked = false} )
+                    .then( res => {
+                        status.is_liked = false;
+                        status.likes_count --;
+                    } )
                     .catch( err => {console.error(err.response.data)} );
             },
         }
