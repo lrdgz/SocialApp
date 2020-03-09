@@ -8,8 +8,10 @@ use Illuminate\Http\Request;
 class StatusLikesController extends Controller
 {
     public function store(Status $status){
-        $status->likes()->create([
-            'user_id' => auth()->id()
-        ]);
+//        $status->likes()->create([
+//            'user_id' => auth()->id()
+//        ]);
+
+        $status->like();
     }
 }

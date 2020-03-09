@@ -17,4 +17,9 @@ class Status extends Model
     public function likes(){
         return $this->hasMany(Like::class);
     }
+
+    public function like(){
+        // $this->likes()->create(['user_id' => auth()->id()]);
+        $this->likes()->firstOrCreate(['user_id' => auth()->id()]);
+    }
 }

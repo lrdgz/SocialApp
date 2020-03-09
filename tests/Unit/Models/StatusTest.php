@@ -28,7 +28,34 @@ class StatusTest extends TestCase
     public function a_status_has_many_likes()
     {
         $status = factory(Status::class )->create();
-        factory(Like::class )->create(['status_id' => $status->id]);
+        $user = factory(User::class)->create();
+        factory(Like::class )->create(['status_id' => $status->id, 'user_id' => $user->id]);
         $this->assertInstanceOf( Like::class, $status->likes->first() );
+    }
+
+    /**
+     * @test
+     */
+    public function a_status_can_be_like()
+    {
+        $status = factory(Status::class )->create();
+        $this->actingAs(factory(User::class)->create());
+        $status->like();
+        $this->assertEquals(1, $status->likes->count());
+    }
+
+    /**
+     * @test
+     */
+    public function a_status_can_be_liked_once()
+    {
+        $status = factory(Status::class )->create();
+        $this->actingAs(factory(User::class)->create());
+
+        $status->like();
+        $this->assertEquals(1, $status->likes->count());
+
+        $status->like();
+        $this->assertEquals(1, $status->fresh()->likes->count());
     }
 }

@@ -37418,7 +37418,9 @@ var render = function() {
           ]
         )
       : _c("div", { staticClass: "card-body" }, [
-          _c("a", { attrs: { href: "/login" } }, [_vm._v("Debes hacer Login")])
+          _c("a", { attrs: { href: "/login" } }, [
+            _vm._v("Debes hacer login para publicar estados.")
+          ])
         ])
   ])
 }

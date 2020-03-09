@@ -32,7 +32,7 @@
                 this.statuses.unshift(status);
             });
         }
-    }
+    };
 </script>
 
 <style scoped>

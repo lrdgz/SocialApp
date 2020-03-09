@@ -14,7 +14,7 @@
             </div>
         </form>
         <div class="card-body" v-else>
-            <a href="/login">Debes hacer Login</a>
+            <a href="/login">Debes hacer login para publicar estados.</a>
         </div>
     </div>
 </template>
@@ -41,7 +41,7 @@
                     .catch(error => { console.error(error.response.data) })
             }
         }
-    }
+    };
 </script>
 
 <style scoped>
