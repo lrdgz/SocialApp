@@ -13,6 +13,27 @@ class UsersCanLikeStatusesTest extends DuskTestCase
 
     use DatabaseMigrations;
 
+
+    /**
+     * A Dusk test example.
+     *
+     * @test
+     * @throws \Throwable
+     */
+    public function guest_users_cannot_like_statuses()
+    {
+
+        $status = factory(Status::class)->create();
+
+        $this->browse(function (Browser $browser) use ($status) {
+            $browser->visit('/')
+                ->waitForText($status->body)
+                ->press("@like-btn")
+                ->assertPathIs("/login")
+            ;
+        });
+    }
+
     /**
      * A Dusk test example.
      *

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div @click="redirectIfGuest">
         <div class="card mb-3 border-0 shadow-sm" v-for="status in statuses">
             <div class="card-body d-flex flex-column">
                 <div class="d-flex align-items-center mb-3">
@@ -15,8 +15,8 @@
                 <button
                     v-if="status.is_liked"
                     @click="unlike(status)"
-                    dusk="unlike-btn btn-sm"
-                    class="btn btn-link"><strong>
+                    dusk="unlike-btn"
+                    class="btn btn-link btn-sm"><strong>
                     <i class="fa fa-thumbs-up text-primary mr-1"></i>
                     TE GUSTA
                 </strong></button>
@@ -52,16 +52,18 @@
         },
         methods: {
             like(status){
+
                 axios.post(`statuses/${status.id}/likes`)
                     .then( res => { status.is_liked = true} )
                     .catch( err => {console.error(err.response.data)} );
             },
 
             unlike(status){
+
                 axios.delete(`statuses/${status.id}/likes`)
                     .then( res => { status.is_liked = false} )
                     .catch( err => {console.error(err.response.data)} );
-            }
+            },
         }
     };
 </script>

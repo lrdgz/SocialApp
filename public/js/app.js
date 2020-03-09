@@ -37503,6 +37503,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
+    { on: { click: _vm.redirectIfGuest } },
     _vm._l(_vm.statuses, function(status) {
       return _c("div", { staticClass: "card mb-3 border-0 shadow-sm" }, [
         _c("div", { staticClass: "card-body d-flex flex-column" }, [
@@ -37540,8 +37541,8 @@ var render = function() {
             ? _c(
                 "button",
                 {
-                  staticClass: "btn btn-link",
-                  attrs: { dusk: "unlike-btn btn-sm" },
+                  staticClass: "btn btn-link btn-sm",
+                  attrs: { dusk: "unlike-btn" },
                   on: {
                     click: function($event) {
                       return _vm.unlike(status)
@@ -49999,6 +50000,13 @@ module.exports = {
     },
     guest: function guest() {
       return !this.isAuthenticated;
+    }
+  },
+  methods: {
+    redirectIfGuest: function redirectIfGuest() {
+      if (this.guest) {
+        return window.location.href = "/login";
+      }
     }
   }
 };
