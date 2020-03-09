@@ -14,6 +14,8 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
@@ -22,7 +24,10 @@
 
         <nav class="navbar navbar-expand-lg navbar-light bg-white navbar-socialapp">
            <div class="container">
-               <a class="navbar-brand" href="{{ route('home') }}">SocialApp</a>
+               <a class="navbar-brand" href="{{ route('home') }}">
+                   <i class="fa fa-address-book text-primary mr-1"></i>
+                   SocialApp
+               </a>
                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                    <span class="navbar-toggler-icon"></span>
                </button>

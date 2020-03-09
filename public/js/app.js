@@ -1929,6 +1929,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 // import auth from '../mixins/auth';
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -1964,6 +1969,22 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -37451,7 +37472,10 @@ var staticRenderFns = [
       _c(
         "button",
         { staticClass: "btn btn-primary", attrs: { id: "create-status" } },
-        [_vm._v("Publicar")]
+        [
+          _c("i", { staticClass: "fa fa-paper-plane text-white mr-1" }),
+          _vm._v("\n                Publicar\n            ")
+        ]
       )
     ])
   }
@@ -37508,24 +37532,28 @@ var render = function() {
           _c("p", {
             staticClass: "card-text text-secondary",
             domProps: { textContent: _vm._s(status.body) }
-          }),
-          _vm._v(" "),
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-footer p-2" }, [
           status.is_liked
             ? _c(
                 "button",
                 {
-                  attrs: { dusk: "unlike-btn" },
+                  staticClass: "btn btn-link",
+                  attrs: { dusk: "unlike-btn btn-sm" },
                   on: {
                     click: function($event) {
                       return _vm.unlike(status)
                     }
                   }
                 },
-                [_vm._v("TE GUSTA")]
+                [_vm._m(0, true)]
               )
             : _c(
                 "button",
                 {
+                  staticClass: "btn btn-link btn-sm",
                   attrs: { dusk: "like-btn" },
                   on: {
                     click: function($event) {
@@ -37533,7 +37561,10 @@ var render = function() {
                     }
                   }
                 },
-                [_vm._v("ME GUSTA")]
+                [
+                  _c("i", { staticClass: "fa fa-thumbs-up text-primary mr-1" }),
+                  _vm._v("\n                ME GUSTA\n            ")
+                ]
               )
         ])
       ])
@@ -37541,7 +37572,17 @@ var render = function() {
     0
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("strong", [
+      _c("i", { staticClass: "fa fa-thumbs-up text-primary mr-1" }),
+      _vm._v("\n                TE GUSTA\n            ")
+    ])
+  }
+]
 render._withStripped = true
 
 
