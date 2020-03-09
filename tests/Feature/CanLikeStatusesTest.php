@@ -18,8 +18,8 @@ class CanLikeStatusesTest extends TestCase
     public function guests_users_can_not_like_statuses()
     {
         $status = factory(Status::class )->create();
-        $response = $this->post(route('statuses.likes.store', $status));
-        $response->assertRedirect('/login');
+        $response = $this->postJson(route('statuses.likes.store', $status));
+        $response->assertStatus(401);
     }
 
     /**
