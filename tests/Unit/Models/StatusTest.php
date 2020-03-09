@@ -36,12 +36,15 @@ class StatusTest extends TestCase
     /**
      * @test
      */
-    public function a_status_can_be_like()
+    public function a_status_can_be_like_and_unlike()
     {
         $status = factory(Status::class )->create();
         $this->actingAs(factory(User::class)->create());
         $status->like();
-        $this->assertEquals(1, $status->likes->count());
+        $this->assertEquals(1, $status->fresh()->likes->count());
+
+        $status->unlike();
+        $this->assertEquals(0, $status->fresh()->likes->count());
     }
 
     /**
