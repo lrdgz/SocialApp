@@ -20,13 +20,37 @@
                 <span dusk="likes-count">{{ status.likes_count }}</span>
             </div>
 
-            <form @submit.prevent="addComment">
-                <textarea name="comment" v-model="newComment"></textarea>
-                <button dusk="comment-btn">Enviar</button>
-            </form>
-
-            <div v-for="comment in status.comments">{{ comment.body }}</div>
         </div>
+
+        <div class="card-footer">
+            <div v-for="comment in status.comments" class="mb-3">
+                <img width="34px" class="rounded shadow-sm float-left mr-2" :src="comment.user_avatar" :alt="comment.user_name">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-2 text-secondary">
+                        <a href="#"><strong>{{ comment.user_name }}</strong></a>
+                        {{ comment.body }}
+                    </div>
+                </div>
+            </div>
+
+            <form @submit.prevent="addComment" v-if="isAuthenticated">
+                <div class="d-flex align-items-center">
+                    <img width="34px" class="rounded shadow-sm mr-2" src="https://aprendible.com/images/default-avatar.jpg" :alt="currentUser.name">
+                    <div class="input-group">
+                        <textarea
+                            v-model="newComment"
+                            class="form-control border-0 shadow-sm"
+                            name="comment"
+                            placeholder="Escribe un comentario..."
+                            rows="1"></textarea>
+                        <div class="input-group-append">
+                            <button dusk="comment-btn" class="btn btn-primary">Enviar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
     </div>
 </template>
 
