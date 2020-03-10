@@ -38,6 +38,7 @@
                     <img width="34px" class="rounded shadow-sm mr-2" src="https://aprendible.com/images/default-avatar.jpg" :alt="currentUser.name">
                     <div class="input-group">
                         <textarea
+                            required
                             v-model="newComment"
                             class="form-control border-0 shadow-sm"
                             name="comment"
@@ -78,7 +79,7 @@
                         this.comments.push(res.data.data);
                         this.newComment = '';
                     })
-                    .catch(err => { console.error(err.response) });
+                    .catch(error => { console.error(error.response.data) })
             }
         }
     };

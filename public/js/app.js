@@ -1991,6 +1991,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 // import auth from '../mixins/auth';
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2130,6 +2131,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2157,8 +2159,8 @@ __webpack_require__.r(__webpack_exports__);
         _this.comments.push(res.data.data);
 
         _this.newComment = '';
-      })["catch"](function (err) {
-        console.error(err.response);
+      })["catch"](function (error) {
+        console.error(error.response.data);
       });
     }
   }
@@ -37624,6 +37626,7 @@ var render = function() {
                 ],
                 staticClass: "form-control border-0 bg-light",
                 attrs: {
+                  required: "",
                   name: "body",
                   placeholder:
                     "Que estas pensando " + _vm.currentUser.name + "?"
@@ -37837,6 +37840,7 @@ var render = function() {
                       ],
                       staticClass: "form-control border-0 shadow-sm",
                       attrs: {
+                        required: "",
                         name: "comment",
                         placeholder: "Escribe un comentario...",
                         rows: "1"

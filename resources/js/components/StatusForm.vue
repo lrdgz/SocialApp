@@ -3,6 +3,7 @@
         <form @submit.prevent="submit" v-if="isAuthenticated">
             <div class="card-body">
                 <textarea
+                    required
                     v-model="body"
                     class="form-control border-0 bg-light"
                     name="body"
