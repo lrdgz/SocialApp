@@ -5,6 +5,7 @@ namespace Tests\Unit\Models;
 use App\Models\Comment;
 use App\Models\Like;
 use App\Models\Status;
+use App\Traits\HasLikes;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 //use PHPUnit\Framework\TestCase;
@@ -105,5 +106,14 @@ class StatusTest extends TestCase
         ]);
 
         $this->assertEquals(2, $status->likesCount());
+    }
+
+
+    /**
+     * @test
+     */
+    public function a_comment_model_must_use_the_trait_has_likes()
+    {
+        $this->assertClassUsesTrait(HasLikes::class, Comment::class);
     }
 }

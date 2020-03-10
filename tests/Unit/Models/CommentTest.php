@@ -3,6 +3,7 @@
 namespace Tests\Unit\Models;
 
 use App\Models\Like;
+use App\Traits\HasLikes;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Models\Comment;
 use App\User;
@@ -94,5 +95,13 @@ class CommentTest extends TestCase
         ]);
 
         $this->assertEquals(2, $comment->likesCount());
+    }
+
+    /**
+     * @test
+     */
+    public function a_comment_model_must_use_the_trait_has_likes()
+    {
+        $this->assertClassUsesTrait(HasLikes::class, Comment::class);
     }
 }
