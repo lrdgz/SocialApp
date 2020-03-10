@@ -1,54 +1,67 @@
 <template>
     <button
-        v-if="status.is_liked"
-        @click="unlike(status)"
-        dusk="unlike-btn"
-        class="btn btn-link btn-sm"><strong>
-        <i class="fa fa-thumbs-up text-primary mr-1"></i>
-        TE GUSTA
-    </strong></button>
-    <button
-        v-else
-        @click="like(status)"
-        dusk="like-btn"
-        class="btn btn-link btn-sm">
-        <i class="fa fa-thumbs-up text-primary mr-1"></i>
-        ME GUSTA
+        @click="toggle()"
+        :class="getBtnClases">
+        <i :class="getIconClases"></i>
+        {{ getText }}
     </button>
 </template>
 
 <script>
     export default {
         props: {
-            status: {
+            model: {
                 type: Object,
                 required: true,
-            }
+            },
+            url: {
+                type: String,
+                required: true,
+            },
+        },
+        computed: {
+            getText(){
+               return this.model.is_liked ? 'TE GUSTA' : 'ME GUSTA';
+            },
+
+            getBtnClases(){
+                return [
+                    'btn',
+                    'btn-link',
+                    'btn-sm',
+                    this.model.is_liked ? 'font-weigth-bold' : '',
+                ];
+            },
+
+            getIconClases(){
+                return [
+                    this.model.is_liked ? 'fa' : 'far',
+                    'fa-thumbs-up', 'text-primary', 'mr-1'
+                ];
+            },
         },
         methods: {
-            like(status){
-
-                axios.post(`statuses/${status.id}/likes`)
+            toggle(){
+                let method = this.model.is_liked ? 'delete' : 'post';
+                axios[method](this.url)
                     .then( res => {
-                        status.is_liked = true;
-                        status.likes_count ++;
+                        this.model.is_liked = !this.model.is_liked;
+                        if(method == 'post'){
+                            this.model.likes_count ++;
+                        } else {
+                            this.model.likes_count --;
+                        }
                     } )
                     .catch( err => {console.error(err.response.data)} );
-            },
-
-            unlike(status){
-
-                axios.delete(`statuses/${status.id}/likes`)
-                    .then( res => {
-                        status.is_liked = false;
-                        status.likes_count --;
-                    } )
-                    .catch( err => {console.error(err.response.data)} );
-            },
+            }
         }
     }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+    .comments-like-btn{
+        font-size: 0.6em;
+        padding-left:0;
+        i { display:none; }
+    }
 </style>

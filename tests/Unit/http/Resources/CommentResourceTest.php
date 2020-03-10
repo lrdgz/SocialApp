@@ -3,7 +3,9 @@
 namespace Tests\Unit\http\Resources;
 
 use App\Http\Resources\CommentResource;
+use App\Http\Resources\UserResource;
 use App\Models\Status;
+use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 //use PHPUnit\Framework\TestCase;
@@ -21,9 +23,12 @@ class CommentResourceTest extends TestCase
         $comment = factory(Status::class )->create();
         $commentResource = CommentResource::make( $comment )->resolve();
 
+        $this->assertEquals($comment->id, $commentResource['id']);
         $this->assertEquals($comment->body, $commentResource['body']);
-        $this->assertEquals($comment->user->name, $commentResource['user_name']);
-        $this->assertEquals('https://aprendible.com/images/default-avatar.jpg', $commentResource['user_avatar']);
+        $this->assertEquals(0, $commentResource['likes_count']);
+        $this->assertEquals(false, $commentResource['is_liked']);
+        $this->assertInstanceOf(UserResource::class, $commentResource['user']);
+        $this->assertInstanceOf(User::class, $commentResource['user']->resource);
 
     }
 }
